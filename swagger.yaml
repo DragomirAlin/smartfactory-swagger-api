@@ -1,4 +1,4 @@
-openapi: 3.0.33
+openapi: 3.0.0
 info:
   title: Smart Factory IoT
   version: 1.0.0
@@ -152,9 +152,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Data'
+                $ref: '#/components/schemas/Pagination'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -178,15 +176,23 @@ paths:
           required: true
           schema:
             type: string
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: size
+          required: false
+          schema:
+            type: number
       responses:
         '200':
           description: success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Data'
+                $ref: '#/components/schemas/Pagination'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -554,7 +560,19 @@ components:
           type: object
         notificationDetails:
           type: object
-
+    Pagination:
+      type: object
+      properties:
+        data: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Data'
+        currentPage: 
+          type: number
+        totalItems: 
+          type: number
+        totalPages: 
+          type: number
   securitySchemes:
     oAuth:
       type: oauth2
