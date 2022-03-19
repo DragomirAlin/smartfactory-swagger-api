@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.33
 info:
   title: Smart Factory IoT
   version: 1.0.0
@@ -7,13 +7,11 @@ info:
   description: Smart Factory IoT
 
 servers:
-  - url: http://{host}:{port}/{base}
+  - url: http://{host}/{base}
     description: local environment
     variables:
-      port:
-        default: '8080'
       host:
-        default: 'localhost'
+        default: 'localhost:8080'
       base:
         default: 'api/v1'
 
@@ -23,7 +21,7 @@ tags:
   - name: Notification
     description: Notification resource endpoint
   - name: Subscription
-    description: Subscription resource endpoint
+    description: Subscription
 
 security:
   - oAuth:
@@ -137,6 +135,17 @@ paths:
       summary: get all data
       description: return a list of all data from db
       operationId: getData
+      parameters:
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: number
+        - in: query
+          name: size
+          required: false
+          schema:
+            type: number
       responses:
         '200':
           description: success
